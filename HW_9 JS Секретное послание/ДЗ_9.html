@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Секретное послание</title>
+</head>
+<body>
+    <script>
+        const secretLetter = [
+            ['DFВsjl24sfFFяВАДОd24fssflj234'],
+            ['asdfFп234рFFdо24с$#afdFFтasfо'],
+            ['оafбasdf%^о^FFжа$#af243ю'],
+            ['afпFsfайFтFsfо13н'],
+            ['fн13Fа1234де123юsdсsfь'],
+            ['чFFтF#Fsfsdf$$о'],
+            ['и$##sfF'],
+            ['вSFSDам'],
+            ['пSFоsfнрSDFаSFвSDF$иFFтsfaсSFя'],
+            ['FFэasdfтDFsfоasdfFт'],
+            ['FяDSFзFFsыSfкFFf']
+        ]; //секретное послание
+        const smallRus = ['а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 
+        'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф',
+        'х', 'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь', 'э', 'ю', 'я']; //массив с русскими маленькими буквами
+
+        let decodingLetters = []; //массив для хранения расшифрованных слов
+
+        for (row of secretLetter) {
+            for (letter of row) {
+                decodingLetters.push(' ')
+                for (char of letter) {
+                    if (smallRus.includes(char)) {
+                        decodingLetters.push(char);
+                    }
+                }
+            }
+        };
+        
+        console.log(decodingLetters.join('')); //вывод расшифрованных слов
+
+    </script>
+</body>
+</html>
