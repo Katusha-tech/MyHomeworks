@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Catalog_exam.css">
+    <title>Каталог книг на Bootstrap</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"/>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
+</head>
+<body>
+    <!--Меню и поле поиска-->
+    <header class="sticky-top bg-dark">
+        <nav class="navbar navbar-expand-lg navbar-dark">
+          <div class="container-fluid">
+            <a class="navbar-brand" href="#">Книжная лавка</a>
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarNav"
+              aria-controls="navbarNav"
+              aria-expanded="false"
+              aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link" aria-current="page" href="#">Главная</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Каталог</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Контакты</a></li>
+              </ul>
+              <!--Поле поиска-->
+              <form class="d-flex" role="search">
+                <input class="form-control me-2 bg-dark text-white" type="search" placeholder="Искать здесь" aria-label="Поиск"/>
+                <button class="btn btn-outline-light" type="submit">Поиск</button>
+              </form>
+            </div>
+          </div>
+        </nav>
+      </header>
+      <main class="container my-5">
+        <div class="row gy-3">
+            <div class="col col-12 col-sm-6 col-md-4 col-lg-2 " style="display:table;">
+                <!--Карточки товара-->
+                <div class="card h-100 text-dark g-col-6">
+                  <img src="Картинки/1.webp" class="card-img-top img-fluid " alt="Название книги" />
+                  <div class="card-body">
+                    <h5 class="card-title text-center">Маги без времени</h5>
+                    <p class="card-author">Сергей Лукьяненко</p>
+                    <p class="card-text">Перед вами роман в жанре классического фэнтези от известного российского писателя, автора популярного цикла «Дозоры» Сергея Лукьяненко. Книга изначально задумывалась как эксперимент, попытка выяснить, легко ли раскрутиться начинающему автору. Сергей Васильевич решил поставить опыт: придумал псевдоним Мастер Романов и начал выкладывать текст, далекий от его фирменного авторского стиля, на одной из литературных интернет-площадок. И читатели, и профессиональные писатели оценили историю «неизвестного автора» по достоинству. Пока Лукьяненко писал книгу, он настолько проникся главной идеей, что проект перестал быть просто шуткой и вылился в полноценный роман. Начало этой истории также вошло в антологию «Лучшая фантастика 2020» в виде повести под названием «Время для мага».</p>
+                    <p class="card-text text-center fw-bold">Цена: 500 руб.</p>
+                    <button class="btn btn-outline-dark">Добавить в корзину</button>
+                  </div>
+                </div>
+            </div>
+            <div class="col col-12 col-sm-6 col-md-4 col-lg-2" style="display:table;">
+                <div class="card h-100 text-dark g-col-6">
+                  <img src="Картинки/2.webp" class="card-img-top img-fluid" alt="Название книги" />
+                  <div class="card-body">
+                    <h5 class="card-title text-center">Семь дней до Мегиддо</h5>
+                    <p class="card-author">Сергей Лукьяненко</p>
+                    <p class="card-text">Когда все это произошло, Макс заканчивал одиннадцатый класс. Однажды ночью он проснулся от воя сирен. Отец сказал, что началась война. В это трудно было поверить, как и трудно было понять, кто нанес первый удар. Лишь потом стало ясно, что речь вовсе не о внутреннем, не о земном конфликте.Так в жизни людей появились Инсеки. Привычный уклад навсегда остался в прошлом. В больших городах возникали Гнезда, там и тут открывались Комки, где за кристаллы можно взять у Продавцов буквально что угодно. </p>
+                    <p class="card-text text-center fw-bold">Цена: 500 руб.</p>
+                    <button class="btn btn-outline-dark">Добавить в корзину</button>
+                  </div>
+                </div>
+            </div>
+            <div class="col col-12 col-sm-6 col-md-4 col-lg-2" style="display:table;">
+                <div class="card h-100 text-dark g-col-6">
+                  <img src="Картинки/3.webp" class="card-img-top img-fluid" alt="Название книги" />
+                  <div class="card-body">
+                    <h5 class="card-title text-center">Лето волонтера</h5>
+                    <p class="card-author">Сергей Лукьяненко</p>
+                    <p class="card-text">Максим лишился своих сил. Высший лишил его формы Защитника, вернув в человеческий облик. Нет, конечно бывший сёрчер все еще был более сильным, быстрым и ловким, чем его соплеменники. Но те особенные способности, которые дарили упоительное чувство власти, ушли навсегда. От этого было обидно. Утешало лишь то, что изменился не только Макс, но и весь привычный ему мир.</p>
+                    <p class="card-text text-center fw-bold">Цена: 500 руб.</p>
+                    <button class="btn btn-outline-dark">Добавить в корзину</button>
+                  </div>
+                </div>
+            </div>
+            <div class="col col-12 col-sm-6 col-md-4 col-lg-2" style="display:table;">
+                <div class="card h-100 text-dark g-col-6">
+                  <img src="Картинки/4.webp" class="card-img-top img-fluid" alt="Название книги" />
+                  <div class="card-body">
+                    <h5 class="card-title text-center">Прыжок</h5>
+                    <p class="card-author">Сергей Лукьяненко</p>
+                    <p class="card-text">Новая книга от признанного мастера жанра дарит ностальгию по раннему Лукьяненко, но показывает совершенно иные грани его таланта. Завершение увлекательной трилогии открывает читателю новые фантастические горизонты.Автор создает необычный мир, населяет его уникальными существами, творит свой собственный язык космических приключений.</p>
+                    <p class="card-text text-center fw-bold">Цена: 500 руб.</p>
+                    <button class="btn btn-outline-dark">Добавить в корзину</button>
+                  </div>
+                </div>
+            </div>
+            <div class="col col-12 col-sm-6 col-md-4 col-lg-2" style="display:table;">
+                <div class="card h-100 text-dark g-col-6">
+                  <img src="Картинки/5.webp" class="card-img-top img-fluid" alt="Название книги" />
+                  <div class="card-body">
+                    <h5 class="card-title text-center">Форсайт</h5>
+                    <p class="card-author">Сергей Лукьяненко</p>
+                    <p class="card-text">Людям порой снится прошлое. Иногда хорошее, иногда не очень… Но что делать, если тебе начинает сниться будущее? И в нем ничего хорошего нет совсем.</p>
+                    <p class="card-text text-center fw-bold">Цена: 500 руб.</p>
+                    <button class="btn btn-outline-dark">Добавить в корзину</button>
+                  </div>
+                </div>
+            </div>
+            <div class="col col-12 col-sm-6 col-md-4 col-lg-2" style="display:table;">
+                <div class="card h-100 text-dark g-col-6">
+                  <img src="Картинки/6.webp" class="card-img-top img-fluid" alt="Название книги" />
+                  <div class="card-body">
+                    <h5 class="card-title text-center">Поиски утраченного завтра</h5>
+                    <p class="card-author">Сергей Лукьяненко</p>
+                    <p class="card-text">Мне тридцать лет. Меня зовут Никита и полвека назад я спас человечество. Как вы и сами понимаете, за это меня часто пытаются убить. Это довольно глупо, конечно. Бессмысленная потеря времени, я каждый раз пытаюсь это объяснить. Но в этот раз, кажется, у них может что-то получиться. Ещё бы понять — кто эти «они».</p>
+                    <p class="card-text text-center fw-bold">Цена: 500 руб.</p>
+                    <button class="btn btn-outline-dark">Добавить в корзину</button>
+                  </div>
+                </div>
+            </div>
+        </div>
+      </main>
+    <footer class="bg-dark text-white text-center py-3">
+        <p>&copy; 2023 BookStore. Все права защищены.</p>
+      </footer>
+      <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+</body>
+</html>
