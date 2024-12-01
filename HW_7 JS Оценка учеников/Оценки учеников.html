@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Оценки учеников</title>
+</head>
+<body>
+    <p id='result'></p>
+    <script>
+        let name = prompt('Введите имя ученика:');
+        let mark = parseInt(prompt('Введите вашу оценку:'));
+        let level;
+        
+
+        if (mark >= 1 && mark <= 3) {
+            level = 'Начальный';
+        } else if (mark >= 4 && mark <= 6) {
+            level = 'Средний';
+        } else if (mark >= 7 && mark <= 9) {
+            level = 'Достаточный';
+        } else if (mark >= 10 && mark <= 12) {
+            level = 'Высокий';
+        } 
+
+        document.getElementById('result').textContent = `Имя студента: ${name}. Уровень: ${level}`;
+    </script>
+    
+</body>
+</html>
