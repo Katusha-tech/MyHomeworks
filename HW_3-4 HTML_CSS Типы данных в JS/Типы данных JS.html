@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Типы данных JS.css">
+    <title>Типы данных JavaScript</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/tomorrow-night-bright.min.css">
+
+</head>
+<body>
+    <header>
+        <h1>Типы данных в JavaScript</h1>
+        <nav>
+            <ul class="menu-main">
+                <li><a href="#Primitive_data_types" class="current">Примитивные типы данных</a></li>
+                <li><a href="#Object_Data_Types">Объектные типы данных</a></li>
+                <li><a href="#Data_Type_Table">Таблица типов данных</a></li>
+                <li><a href="#Quotes_about_programming">Цитаты про программирование</a></li>
+                <li><a href="#Conclusion_on_the_topic">Выводы</a></li>
+                <li><a href="#Our_contacts">Контакты</a></li>
+            </ul>
+            <form action="">
+                
+            </form>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <p class="red_string">
+                <dfn><abbr title="JavaScript">JS</abbr></dfn>
+                — это язык программирования, который работает с различными типами данных. В этой статье мы рассмотрим основные типы данных, с которыми вам придется столкнуться при работе с <i>JavaScript.</i>
+            </p>
+        </section>
+        <section id="Primitive_data_types">
+            <h2>Примитивные типы данных</h2>
+            <p class="red_string">
+                <dfn>Примитивные типы данных</dfn> — это базовые типы данных в JavaScript, которые не являются объектами и не имеют методов. 
+            </p>
+            <p class="red_string">К ним относятся:</p>
+            <ol>
+                <li><b>`String`</b> (строка) — представляет собой последовательность символов.</li>
+                <li><b>`Number`</b> (число) — может быть целым числом или числом с плавающей запятой.</li>
+                <li><b>`Boolean`</b>(логическое значение) — может принимать только два значения: <b>`true`</b> или <b>`false`</b>.</li>
+                <li><b>`Undefined`</b>(неопределенный тип) — значение переменной, которая была объявлена, но не была инициализирована.</li>
+                <li><b>`Null`</b> (нулевой тип) — особое значение, которое указывает на отсутствие объекта.
+                </li>
+            </ol>
+            <pre>
+                <code>
+// Пример использования примитивных типов данных:                    
+let name = "John";  // String
+let age = 30;       // Number
+let isStudent = false; // Boolean
+let job;            // Undefined
+let car = null;     // Null
+                </code>
+            </pre>
+        </section>
+        <section id="Object_Data_Types">
+            <h2>Объектные типы данных</h2>
+            <p class="red_string">
+                В JavaScript также существуют типы данных, основанные на объектах. Эти типы позволяют хранить более сложные структуры данных.
+            </p>
+            <p class="red_string">Рассмотрим основные объектные типы:</p>
+            <ol>
+                <li><b>Object</b> (объект) — коллекция пар "ключ-значение". Ключами могут быть строки или символы, а значениями — любые типы данных.</li>
+                <li><b>Array</b> (массив) — упорядоченный список значений, индексированный целыми числами.</li>
+                <li><b>Function</b> (функция) — блок кода, который можно вызвать для выполнения определенной задачи.
+                </li>
+            </ol>
+            <pre>
+                <code>
+// Пример работы с объектными типами данных:                    
+let person = {
+  name: "John",
+  age: 30,
+  isStudent: true
+};
+
+let numbers = [1, 2, 3, 4, 5];
+
+function greet() {
+  console.log("Hello, World!");
+}
+                </code>
+            </pre>
+        </section>
+        <section id="Data_Type_Table">
+            <table class="table_dark">
+                <caption>Таблица типов данных</caption>
+                <thead class="name_desc">
+                    <tr>
+                        <th class="th_name">Тип</th>
+                        <th class="th_description">Описание</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>`String` </td>
+                        <td>Последовательность символов               </td>
+                    </tr>
+                    <tr>
+                        <td>`Number`</td>
+                        <td>Число, целое или с плавающей запятой           </td>
+                    </tr>
+                    <tr>
+                        <td>`Boolean`</td>
+                        <td>Логическое значение: `true` или `false`         </td>
+                    </tr>
+                    <tr>
+                        <td>`Undefined`</td>
+                        <td>Значение переменной, которая не была инициализирована</td>
+                    </tr>
+                    <tr>
+                        <td>`Null`</td>
+                        <td>Указывает на отсутствие объекта                </td>
+                    </tr>
+                    <tr>
+                        <td>`Object`</td>
+                        <td>Коллекция пар "ключ-значение"</td>
+                        
+                    </tr>
+                    <tr>
+                        <td>`Array` </td>
+                        <td>Упорядоченный список значений </td>
+                    </tr>
+                    <tr>
+                        <td>`Function`</td>
+                        <td>Блок кода, выполняющий определенную задачу </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <section id="Quotes_about_programming">
+            <h2>Цитаты про программирование</h2>
+            <blockquote class="quote_1">
+            <p class="bold_phrase">&quot;Программирование — это не спринт, а марафон.&quot;</p>
+            <footer class="footer_quote">Сергей Немчинский</footer>
+            </blockquote>
+            <blockquote class="quote_2">
+            <p class="bold_phrase">&quot;Не грусти. Рано или поздно все станет понятно, все станет на свои места и выстроится в единую красивую схему, как кружева. Станет понятно, зачем все было нужно, потому что все будет правильно.&quot;</p>
+            <footer class="footer_quote">Алиса в Стране Чудес</footer>
+        </blockquote>
+        </section>
+        <section id="Conclusion_on_the_topic">
+            <h2>Вывод по теме</h2>
+            <p class="red_string">В JavaScript важно понимать, какие типы данных вы используете, так как это влияет на поведение вашего кода. Примитивные типы данных, такие как строки, числа и логические значения, являются основой языка и часто используются для простых операций. Они не имеют методов и не могут быть изменены после создания. Например, строка "John" или число 30 — это примитивные значения, которые могут быть легко использованы в различных вычислениях и логических выражениях.</p>
+            <p class="red_string">С другой стороны, объектные типы данных предоставляют более сложные структуры для хранения информации. Объекты позволяют организовывать данные в пары "ключ-значение", что упрощает доступ к ним и управление ими. Массивы упорядочивают данные, делая их удобными для перебора и манипуляций. Функции же представляют собой блоки кода, которые можно повторно использовать для выполнения задач. Знание этих типов данных поможет вам более эффективно работать с JavaScript и строить качественные приложения.</p>
+        </section>
+    </main>
+    <footer id="Our_contacts">
+        <h2>Наши контакты</h2>
+        <a href="tel: +79278525698" class="tel_num">Позвоните нам: +7 (927) 852-56-98</a>
+        <h3>Компания на карте</h3>
+        <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A402a7581c9679716c8ef33e9fe9cd669acfaa1428001cfb0c14fd34f5e12b893&amp;source=constructor" width="100%" height="498" frameborder="0"></iframe>
+        <p class="footer_detail">&#169;2024 Gandalf</p>
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
+    <script>
+        hljs.highlightAll();
+    </script>
+</body>
+</html>
