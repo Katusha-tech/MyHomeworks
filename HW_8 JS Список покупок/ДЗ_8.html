@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список покупок</title>
+</head>
+<body>
+    <h1>Домашняя работа N8</h1>
+    <script>
+        // Ввод данных:
+        let nameProducts = prompt("Введите название продуктов через пробел").split(' '); //список покупок, разделенные пробелами, преобразовали с помощь. split
+        console.log(nameProducts); //вывели в консоли
+
+        //Взаимодействие с пользователем:
+        let lengthList = nameProducts.length; //находим длину нашего массива
+        let alertMessage = 'В вашем списке' + ' ' + lengthList;
+        alert(alertMessage);// выводим число с помощью alert
+        let numberElement = parseInt(prompt(`Введите номер элемента из списка (от 1 до ${lengthList}):`)); //ввести номер элемента
+
+        //Изменение массива:
+        let selectedElement = nameProducts[numberElement - 1];
+        alert(selectedElement);//показываем пользователю выбранный элемент
+        let askUsers = prompt("Вы хотите заменить старое значение на новое? Введите новое значение или 'no' для отмены");
+        if (askUsers.trim() === " " && askUsers === 'no' ) { 
+            alert('Вы отказались от замены!');
+        } else {
+            nameProducts.splice(numberElement - 1, 1, askUsers);
+           
+        };
+        //Обратное преобразование:
+        let newListProduct = nameProducts.join(','); //приводим массив к строке с помощью join
+        let alertShowNewList = newListProduct;
+        alert(alertShowNewList); //новый список
+    </script>
+</body>
+</html>
