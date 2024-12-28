@@ -1,3 +1,4 @@
+import yaml
 import csv
 import os
 
@@ -55,13 +56,6 @@ def append_csv(data, file_path, delimiter=';', encoding: str ='utf-8') -> None:
         else:    
             writer.writerow(data) #добавление строки
 
-
-
-
-
-
-
-
 """
 Функции для работы с TXT (чтение, запись, добавлени)
 """
@@ -100,5 +94,17 @@ def append_txt(data, file_path, encoding: str = "utf-8") -> None:
     with open(file_path, 'a', encoding=encoding) as file:
         file.write(data)
 
-       
+"""
+Функция для работы с YAML
+"""
+def read_yaml(file_path):
+    """
+    Чтение данных из YAML-файла
+    Args:
+        file_path: путь к файлу
+    """
+    with open (file_path, "r", encoding = "utf-8") as file:
+        yaml_data = yaml.safe_load(file)
+    return yaml_data
+
 
