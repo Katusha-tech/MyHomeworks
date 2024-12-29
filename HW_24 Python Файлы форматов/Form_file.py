@@ -1,12 +1,53 @@
 import yaml
 import csv
 import os
-
+import json
 os.system("cls")
 """
 Функция JSON (чтение, запись, добавление данных)
 """
-import json
+def read_json(file_path: str, encoding: str = "utf-8"):
+    """
+    Чтение данных из JSON-файла
+    Args:
+        file_path: путь к файлу.
+        encoding: кодировка файла (по умолчанию `"utf-8"`)
+    """
+    with open(file_path, "r", encoding = encoding) as file:
+        data = json.load(file)
+    return data     
+
+def write_json(data, file_path: str, encoding: str = "utf-8"):
+    """
+    Запись данных в JSON-файл
+    Args:
+        data: данные для записи.
+        file_path: путь к файлу.
+        encoding: кодировка файла (по умолчанию `"utf-8"`)
+    """
+    with open(file_path, "w", encoding = encoding) as file:
+        json.dump(data, file, indent = 4, ensure_ascii = False)
+
+
+def append_json(data: list[dict], file_path: str, encoding: str = "utf-8"):
+    """
+    Добавление данных в существующий JSON-файл
+    Args:
+        data: список словарей с данными для добавления.
+        file_path: путь к файлу.
+        encoding: кодировка файла (по умолчанию `"utf-8"`)
+    """
+    if os.path.exists(file_path):
+        with open(data, file_path, "r", encoding=encoding) as file:
+            data = json.load(file)
+    else:
+        data = []
+
+    data.extend(data)
+
+    with open(file_path, 'w',encoding=encoding) as file:
+        json.dump(data, file_path, indent = 4, ensure_ascii= False)    
+
 
 """
 Функции для работы с CSV
@@ -92,7 +133,7 @@ def append_txt(data, file_path, encoding: str = "utf-8") -> None:
         encoding (str, optional): кодировка файла. По умолчанию 'utf-8'
     """
     with open(file_path, 'a', encoding=encoding) as file:
-        file.write(data)
+        file.write(data + '\n')
 
 """
 Функция для работы с YAML
