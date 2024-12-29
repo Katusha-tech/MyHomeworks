@@ -37,15 +37,15 @@ def append_json(data: list[dict], file_path: str, encoding: str = "utf-8"):
         file_path: путь к файлу.
         encoding: кодировка файла (по умолчанию `"utf-8"`)
     """
-    if os.path.exists(file_path):
+    if os.path.exists(file_path): #Если файл существует, читаем данные или создаем пустой список
         with open(data, file_path, "r", encoding=encoding) as file:
             data = json.load(file)
     else:
         data = []
 
-    data.extend(data)
+    data.extend(data) #Добавляем новые данные
 
-    with open(file_path, 'w',encoding=encoding) as file:
+    with open(file_path, 'w',encoding=encoding) as file: #Записываем обновленные данные в файл
         json.dump(data, file_path, indent = 4, ensure_ascii= False)    
 
 
