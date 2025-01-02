@@ -1,0 +1,15 @@
+
+    weather_app:
+      settings:
+        city: London
+        update_interval: 30
+        units: metric
+      api:
+        key: 58ffee3f9e03a1428d9eefbabc922e5c
+        base_url: https://api.openweathermap.org/data/2.5/weather?q=London&appid=58ffee3f9e03a1428d9eefbabc922e5c
+      display:
+        temperature: true
+        humidity: true
+        wind_speed: true
+        pressure: false
+    

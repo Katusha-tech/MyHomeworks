@@ -29,24 +29,30 @@ def write_json(data, file_path: str, encoding: str = "utf-8"):
         json.dump(data, file, indent = 4, ensure_ascii = False)
 
 
-def append_json(data: list[dict], file_path: str, encoding: str = "utf-8"):
+def append_json(data, file_path, encoding="utf-8"):
     """
-    Добавление данных в существующий JSON-файл
+    Функция для добавления данных в JSON файл.
+    Если файл не существует, он будет создан.
+    
     Args:
-        data: список словарей с данными для добавления.
-        file_path: путь к файлу.
-        encoding: кодировка файла (по умолчанию `"utf-8"`)
+        data: Список данных для добавления в JSON.
+        file_path: Путь к JSON файлу.
+        encoding: Кодировка файла (по умолчанию 'utf-8').
     """
-    if os.path.exists(file_path): #Если файл существует, читаем данные или создаем пустой список
-        with open(data, file_path, "r", encoding=encoding) as file:
-            data = json.load(file)
-    else:
-        data = []
-
-    data.extend(data) #Добавляем новые данные
-
-    with open(file_path, 'w',encoding=encoding) as file: #Записываем обновленные данные в файл
-        json.dump(data, file_path, indent = 4, ensure_ascii= False)    
+    try:
+        # Открываем файл для чтения и получения текущих данных
+        with open(file_path, "r", encoding=encoding) as file:
+            file_data = json.load(file)
+    except FileNotFoundError:
+        # Если файл не существует, создаем пустой список
+        file_data = []
+    
+    # Добавляем новые данные в список
+    file_data.extend(data)
+    
+    # Записываем обновленные данные обратно в файл
+    with open(file_path, "w", encoding=encoding) as file:
+        json.dump(file_data, file, ensure_ascii=False, indent=4)
 
 
 """
@@ -124,6 +130,7 @@ def write_txt(data, file_path, encoding: str = "utf-8") -> None:
     with open(file_path, 'w', encoding=encoding) as file:
         file.write(data + "\n")
 
+
 def append_txt(data, file_path, encoding: str = "utf-8") -> None:
     """
     Добавление данных в конец текстового файла
@@ -147,5 +154,3 @@ def read_yaml(file_path):
     with open (file_path, "r", encoding = "utf-8") as file:
         yaml_data = yaml.safe_load(file)
     return yaml_data
-
-
