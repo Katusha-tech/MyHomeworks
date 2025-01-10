@@ -47,3 +47,5 @@ dict_prod_and_dir = {key: value for key, value in sorted(full_dict.items(), key=
 pprint(dict_prod_and_dir)
 
 
+
+
