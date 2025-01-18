@@ -1,3 +1,5 @@
+import csv
+
 from string import (
     ascii_lowercase, ascii_uppercase,
     punctuation)
@@ -15,32 +17,35 @@ def password_validator(length: int = 8, uppercase: int = 1, lowercase: int = 1, 
         special_chars (int): Минимальное количество спец-знаков (по умолчанию 1)
     """
     def decorator(func: Callable) -> Callable:
-        def wrapper(user_password: str):
-            if not user_password:
-                return "Пароль не введен"
-    
-            if len(user_password) < length:
-                return "Слишком короткий пароль"
+        def wrapper(username: str, password: str):
+            if not password:
+                raise ValueError(
+                    f"Пароль не введен"
+                )
             
-            if sum(1 for char in  user_password if char in ascii_uppercase) < uppercase:
-                return f"Пароль должен содержать минимум {uppercase} заглавных букв"
+            if len(password) < length:
+                raise ValueError(
+                    f"Слишком короткий пароль"
+                )
             
-            if sum(1 for char in  user_password if char in  ascii_lowercase) < lowercase:
-                return f"Пароль должен содержать минимум {lowercase} строчных букв"
+            if sum(1 for char in password if char in ascii_uppercase) < uppercase:
+                raise ValueError(
+                    f"Пароль должен содержать минимум {uppercase} заглавных букв"
+                )
             
-            if sum(1 for char in user_password if char in punctuation) < special_chars:
-                return f"Пароль должен содержать минимум {special_chars} специальных символов"
+            if sum(1 for char in password if char in  ascii_lowercase) < lowercase:
+                raise ValueError(
+                    f"Пароль должен содержать минимум {lowercase} строчных букв"
+                    )
             
-            return func(user_password)
-        
+            if sum(1 for char in password if char in punctuation) < special_chars:
+                raise ValueError(
+                    f"Пароль должен содержать минимум {special_chars} специальных символов"
+                    ) 
+            
+            return func(username, password)
         return wrapper
-    
     return decorator
-
-
-@password_validator(length = 8, uppercase = 1, lowercase = 1, special_chars = 1)
-def register_user(user_password: str) ->str:
-    return "Успешная регистрация"
 
 
 # Декоратор для проверки имени пользователя
@@ -48,30 +53,48 @@ def username_validator(func: Callable) -> Callable:
     """
     Декоратор для проверки валидации имени пользователя
     """
-    def wrapper(user_name:str) -> str:
-        if not user_name:
-            return "Имя пользователя не введено"
-        
-        if " " in user_name:
-            raise ValueError(
-                f"Имя пользователь '{user_name}' содержит пробел."
+    def wrapper(username: str, password: str) -> str:
+        if not username:
+            raise ValueError (
+                f"Имя пользователя не введено"
             )
         
-        return func(user_name)
-    
+        if " " in username:
+            raise ValueError(
+                f"Имя пользователь '{username}' содержит пробел."
+            )
+        
+        return func(username, password)
     return wrapper
     
+
+# Запись имени пользователя и пароля в CSV файл
+def append_csv(username: str, password: str, file_path: str = "users.csv", delimiter=';', encoding: str ='utf-8') -> None:
+    """
+    Добавление данных в CSV - файл
+    Args:
+        username: имя пользователь
+        password: пароль 
+        file_path: путь к файлу
+        delimiter: разделитель полей в файле (по умолчанию `';'`)
+        encoding: кодировка файла
+    """
+    with open(file_path, "a", encoding=encoding, newline='') as file:
+        writer = csv.writer(file, delimiter=delimiter, lineterminator="\n")
+        writer.writerow([username, password])
+
+# Функция регистрация пользователя
+@password_validator(length = 8, uppercase = 1, lowercase = 1, special_chars = 1)
 @username_validator
-def register_user_name(user_name: str) -> str:
-    return "Имя введено верно"
+def register_user(username: str, password: str) ->str:
+    append_csv(username, password)
+    return "Регистрация прошла успешно!"
 
 
-# Ввод пользователя
-user_password = input("Введите пароль: ")
-print(register_user(user_password))
-
-user_name = input("Введите имя пользователя: ").strip()
+# Тестирование успешного случая
 try:
-    print(register_user_name(user_name))
+    username = input("Введите имя пользователя: ").strip()
+    password = input("Введите пароль: ").strip()
+    print(register_user(username, password))
 except ValueError as e:
     print(f"Ошибка: {e}")
