@@ -1,6 +1,7 @@
 from string import (
     ascii_lowercase, ascii_uppercase,
     punctuation)
+
 from typing import Callable
 
 def password_checker(func: Callable) -> Callable:
