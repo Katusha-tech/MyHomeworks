@@ -173,5 +173,60 @@ def split_text_to_chunks(data: list) -> list:
 
     return chunks
 
+def save_to_markdown(timestamps: str, theme: str, chunks: list):
+    """
+    Сохраняет результаты в markdown файл
+    """
+    with open(OUTPUT_FILE, 'w', encoding = "utf-8") as file:
+        file.write("# Таймкоды\n\n")
+        file.write(timestamps)
+        file.write("\n\n---\n\n")
 
+        file.write("# Краткое содержание\n\n")
+        file.write(theme)
+        file.write("\n\n---\n\n")
+
+        file.write("# Конспект\n\n")
+        for chunk in chunks:
+            file.write(chunk)
+            file.write("\n\n---\n\n")
+
+async def main():
+    # 1. Добавление ключа "timestamp"
+    full_data = add_timestamp_text(DATA)
+    full_data_json_string = json.dumps(full_data, ensure_ascii=False)
+
+    # 2. Создаем задачу на таймкоды
+    timestamps_task = asyncio.create_task(
+        get_ai_request(PROMPT_TIMESTAMPS + json.dumps(full_data_json_string, ensure_ascii=False))
+        )
+    # 3. Создаем задачу на тему
+    theme_task = asyncio.create_task(
+        get_ai_request(PROMPT_THEME + json.dumps(full_data_json_string, ensure_ascii=False))
+    )
+    # 4. Делаем чанки, пока задачи крутятся
+    chunks = split_text_to_chunks(full_data)
+
+    # 5. Выполняются задачи
+    timestamps = await timestamps_task
+    theme = await theme_task
+
+    # 6. Формируются чанки -задания для отправки
+    chunk_tasks = []
+
+    for chunk in chunks:
+        prompt = PROMPT_CONSPECT_WRITER.format(
+            topic = theme,
+            full_text = full_data_json_string,
+            text_to_work = chunk,
+        )
+        task = asyncio.create_task(get_ai_request(prompt))
+        chunk_tasks.append(task)
+        
+    results = await asyncio.gather(*chunk_tasks)
+
+    save_to_markdown(timestamps, theme, results)
+
+if __name__ == "__main__":
+    asyncio.run(main())
 
