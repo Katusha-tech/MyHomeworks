@@ -177,19 +177,24 @@ def save_to_markdown(timestamps: str, theme: str, chunks: list):
     """
     Сохраняет результаты в markdown файл
     """
-    with open(OUTPUT_FILE, 'w', encoding = "utf-8") as file:
-        file.write("# Таймкоды\n\n")
-        file.write(timestamps)
-        file.write("\n\n---\n\n")
-
-        file.write("# Краткое содержание\n\n")
-        file.write(theme)
-        file.write("\n\n---\n\n")
-
-        file.write("# Конспект\n\n")
-        for chunk in chunks:
-            file.write(chunk)
+    try: 
+        with open(OUTPUT_FILE, 'w', encoding = "utf-8") as file:
+            file.write("# Таймкоды\n\n")
+            file.write(timestamps)
             file.write("\n\n---\n\n")
+
+            file.write("# Краткое содержание\n\n")
+            file.write(theme)
+            file.write("\n\n---\n\n")
+
+            file.write("# Конспект\n\n")
+            for chunk in chunks:
+                file.write(chunk)
+                file.write("\n\n---\n\n")
+        print(f"Файл успешно сохранен {OUTPUT_FILE}")
+    except Exception as e:
+        print(f"Ошибка при сохранении файла: {e}")    
+
 
 async def main():
     # 1. Добавление ключа "timestamp"
@@ -230,3 +235,16 @@ async def main():
 if __name__ == "__main__":
     asyncio.run(main())
 
+# Тест запросов
+async def main():
+    prompt_cow = "Как кричит корова?"
+    prompt_cat = "Как кричит кошка?"
+    prompt_monkey = "Как кричит обезьяна?"
+
+    prompts = [prompt_cow, prompt_cat, prompt_monkey]
+    results = await asyncio.gather(*[get_ai_request(prompt) for prompt in prompts])
+
+    print(results)
+
+
+asyncio.run(main())
