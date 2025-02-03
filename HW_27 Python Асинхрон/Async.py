@@ -128,4 +128,50 @@ def add_timestamp_text(data: list[dict]) -> list[dict]:
         item["timestamp_text"] = [start_time, end_time]
     return data
 
+async def get_ai_request(prompt: str, max_retries: int = 3, base_delay: float = 2.0):
+    """
+    Отправляет запрос к API с механизмом повторных попыток base_delay - начальная задержка, которая будет увеличиваться экспоненциально
+    :param prompt: текст запроса
+    :param max_retries: максимальное количество попыток
+    :param base_delay: начальная задержка между попытками
+    :return: ответ от API
+    """
+    for attempt in range(max_retries):
+        try:
+            response = await client.chat.completions.create(
+                model = "openai/gpt-4o-mini",
+                messages = [{"role": "user", "content": prompt}],
+                max_tokens = 16000, # выдать токенов
+                temperature = 0.7, # стандартно от 0.5 до 0.8
+            )
+            return response.choices[0].message.content
+        
+        except openai.RateLimitError:
+            if attempt == max_retries - 1:
+                raise
+            delay = base_delay * (2 ** attempt) # Экспоненциальное увеличение задержки
+            await asyncio.sleep(delay)
+
+def split_text_to_chunks(data: list) -> list:
+    """
+    Разбивание текста на чанки(мелкие кусочки/отрезки), но не более MAX_CHUNK_SIZE символов
+    """
+    chunks = []
+    current_chunk = ""
+
+    for item in data:
+        text = item["text"].strip() 
+        if len(current_chunk) + len(text) + 1 <= MAX_CHUNK_SIZE: # +1 для пробела
+            current_chunk += " " + text if current_chunk else text
+        else:
+            if current_chunk:
+                chunks.append(current_chunk)
+            current_chunk = text
+
+    if current_chunk:
+        chunks.append(current_chunk)
+
+    return chunks
+
+
 
