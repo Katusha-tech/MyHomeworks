@@ -47,4 +47,16 @@ class TxtFileHandler:
         """
         with open(self.filepath, 'a', encoding=encoding) as file:
             file.write('\n'.join(data) + '\n')
-       
+
+# Тестирование 
+handler = TxtFileHandler("my_file.txt")
+
+# Запись в файл
+handler.write_file("This is a test string.\n")
+
+# Добавление в файл
+handler.append_file("This is another string.\n")
+
+# Чтение из файла
+content = handler.read_file()
+print(content)
