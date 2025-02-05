@@ -1,24 +1,50 @@
-class TxtFileHandler():
-    def read_file(filepath: str) -> str:
-        """
-        Чтение данных из TXT файла
-        param: filepath - путь файла
-        return: str - возврат строки
-        """
-        pass
+import os
+os.system("cls") # очищение терминала
 
-    def write_file(filepath: str, *data: str) -> None:
-        """
-        Запись данных в TXT файл
-        param: filepath - путь файла
-        data - данные
-        """
-        pass
 
-    def append_file(filepath: str, *data: str) -> None:
+class TxtFileHandler:
+    """
+    Класс для работы с тексовыми файлами(чтение, запись, добаавление)
+    """
+    def __init__(self, filepath: str):
         """
-        Дозаписывание данных в TXT файл
-        param: filepath -  путь
-        data - данные
+        Инициализация класса с указанием пути к файлу.
+        :param filepath: путь к файлу
         """
-    def read_file
+        self.filepath = filepath
+
+
+    def read_file(self, encoding: str = "utf-8") -> str:
+        """
+        Чтение данных из TXT файла и возвращение в виде строки,
+        eсли файл не найден, возвращает пустую строку
+        :param encoding (str, optional): кодировка файла, по умолчанию 'utf-8'
+        """
+        try:
+            with open(self.filepath, 'r', encoding=encoding) as file:
+                return file.read()
+        except FileNotFoundError:
+            return ""
+        except Exception as e:
+            print(f"Ошибка при чтении файла: {e}")
+            return ""
+            
+
+    def write_file(self, *data: str, encoding: str = "utf-8") -> None:
+        """
+        Запись данных в TXT файл, перезаписывая его содержимое
+        :param data: данные для записи в файл
+        :param encoding (str, optional): кодировка файла, по умолчанию 'utf-8'
+        """
+        with open(self.filepath, 'w', encoding=encoding) as file:
+            file.write('\n'.join(data) + '\n')
+
+    def append_file(self, *data: str, encoding: str = "utf-8") -> None:
+        """
+        Дозаписывание данных в TXT файл в конец файла
+        :param data: данные для добавления
+        :param encoding (str, optional): кодировка файла, по умолчанию 'utf-8'
+        """
+        with open(self.filepath, 'a', encoding=encoding) as file:
+            file.write('\n'.join(data) + '\n')
+       
