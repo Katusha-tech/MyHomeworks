@@ -36,27 +36,24 @@ class ImageCompressor:
 
         Returns:None
         """
-    with Image.open(input_path) as img:
-        img.save(output_path, "HEIF", quality=QUALITY)
-    print(f"Сжато: {input_path} -> {output_path}")
+        with Image.open(input_path) as img:
+            img.save(output_path, "HEIF", quality=self.__quality)
+        print(f"Сжато: {input_path} -> {output_path}")
 
-def process_directory(directory: str) -> None:
-    """
-    Обрабатывает все изображения в указанной директории и её поддиректориях.
-
-    Args:
-        directory (str): Путь к директории для обработки.
-
-    Returns:
-        None
-    """
-    for root, _, files in os.walk(directory):
-        for file in files:
+    def process_directory(directory: str) -> None:
+        """
+        Обрабатывает все изображения в указанной директории и её поддиректориях.
+        Args:
+        -directory (str): Путь к директории для обработки.
+        Returns:None
+        """
+        for root, _, files in os.walk(directory):
+            for file in files:
             # Проверяем расширение файла
-            if file.lower().endswith(('.jpg', '.jpeg', '.png')):
-                input_path = os.path.join(root, file)
-                output_path = os.path.splitext(input_path)[0] + '.heic'
-                compress_image(input_path, output_path)
+                if file.lower().endswith(self.supported_formats):
+                    input_path = os.path.join(root, file)
+                    output_path = os.path.splitext(input_path)[0] + '.heic'
+                    self.compress_image(input_path, output_path)
 
 def main(input_path: str) -> None:
     """
