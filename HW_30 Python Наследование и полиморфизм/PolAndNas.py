@@ -112,9 +112,49 @@ class TxtFile(AbstractFile):
             file.write('\n'.join(data) + '\n')
         
 class CsvFile(AbstractFile):
-    def read(self):
-        pass
-    def write(self):
-        pass
-    def append(self):
-        pass
+    """Класс для работы с CSV-файлами(чтение, запись, дозапись)"""
+
+    def read(self, delimiter = ";",  encoding: str = "utf-8"):
+        """
+        Чтение данных из CSV-файла и возвращение в виде списка словарей
+        :param delimiter (str, optional): разделитель полей в CSV-файле, по умолчанию ';'
+        :param encoding (str, optional): кодировка файла, по умолчанию 'utf-8'
+        """
+        try:
+            with open(self.file_path, 'r', encoding=encoding) as file:
+                reader = csv.reader(file, delimiter=delimiter)
+                data = list(reader)
+                return data
+        except FileNotFoundError:
+            return []
+        except Exception as e:
+            print(f"Ошибка при чтении файла: {e}")
+            return []
+        
+
+    def write(self, *data: list[dict], delimiter = ";", encoding: str = "utf-8"):
+        """
+        Запись данных в CSV-файл
+        :param data: данные для записи в файл
+        :param delimiter (str, optional): разделитель полей в CSV-файле, по умолчанию ';'
+        :param encoding (str, optional): кодировка файла, по умолчанию 'utf-8'
+        """
+        with open(self.file_path, 'w', encoding=encoding) as file:
+            writer = csv.writer(file, delimiter=delimiter, lineterminator='\n')
+            writer.writerows(data)
+
+
+    def append(self, *data: list[dict], delimiter = ";", encoding: str = "utf-8"):
+        """
+        Добавление данных в CSV-файл в конец файла
+        :param data: данные для добавления
+        :param delimiter (str, optional): разделитель полей в CSV-файле, по умолчанию ';'
+        :param encoding (str, optional): кодировка файла, по умолчанию 'utf-8'
+        """
+        with open(self.file_path, 'a', encoding=encoding, newline='') as file:
+            writer = csv.writer(file, delimiter=delimiter, lineterminator='\n')
+            if isinstance(data[0], list): # если data - это список списков
+                writer.writerow(data) # добавление строк
+            else:
+                writer.writerow(data) # добавление строки 
+    
