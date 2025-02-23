@@ -1,10 +1,11 @@
 import os
-os.system("cls") # очищение терминала
 import json
 import csv
 
+os.system("cls") # очищение терминала
 
 from abc import ABC, abstractmethod
+from typing import Any
 
 class AbstractFile(ABC):
     """
@@ -14,22 +15,22 @@ class AbstractFile(ABC):
         self.file_path = file_path
 
     @abstractmethod
-    def read(self) -> str:
+    def read(self) -> Any:
         """Чтение содержимое файла"""
         pass
 
     @abstractmethod
-    def write(self, data: list[dict]):
+    def write(self, data: Any) -> None:
         """ Записывание данных в файл """
         pass
 
     @abstractmethod
-    def append(self, data: list[dict]):
+    def append(self, data: Any) -> None:
         """Добавление данных в файл"""
         pass
 
     def __str__(self):
-        return f"{self.__class__.__name__} {self.file_path}"
+        return f"{self.__class__.__name__} ({self.file_path})"
     
 
 class JsonFile(AbstractFile):
@@ -47,7 +48,7 @@ class JsonFile(AbstractFile):
             return []
         
     
-    def write(self, *data: list[dict], encoding: str = "utf-8"):
+    def write(self, data: list[dict], encoding: str = "utf-8"):
         """
         Запись данных в Json-файл, перезаписывая его содержимое.
         :param data:данные для записи в файл
@@ -57,7 +58,7 @@ class JsonFile(AbstractFile):
             json.dump(data, file, indent=4, ensure_ascii=False)
         
     
-    def append(self, *data: list[dict], encoding: str = "utf-8"):
+    def append(self, data: list[dict], encoding: str = "utf-8"):
         """
         Дозапись данных в Json-файл в конец файла, если файл не найден, он будет создан.
         :param data: данные для добавления
@@ -73,6 +74,8 @@ class JsonFile(AbstractFile):
         
         # Добавляем новые данные в список
         file_data.extend(data)
+        with open(self.file_path, 'w', encoding=encoding) as file:
+            json.dump(file_data, file, indent=4, ensure_ascii=False)
 
 class TxtFile(AbstractFile):
     """Класс для работы с TXT-файлами(чтение, запись, дозапись)"""
@@ -92,7 +95,7 @@ class TxtFile(AbstractFile):
             return ""
 
 
-    def write(self, *data:str, encoding: str = "utf-8"):
+    def write(self, data:list[str], encoding: str = "utf-8"):
         """
         Запись данных в TXT-файл, перезаписывая его содержимое.
         :param data: данные для записи в файл
@@ -102,7 +105,7 @@ class TxtFile(AbstractFile):
             file.write('\n'.join(data) + '\n')
 
 
-    def append(self, *data:str, encoding: str = "utf-8"):
+    def append(self, data:list[str], encoding: str = "utf-8"):
         """
         Дозаписывание данных в TXT-файл в конец файла.
         :param data: данные для добавления
@@ -121,7 +124,7 @@ class CsvFile(AbstractFile):
         :param encoding (str, optional): кодировка файла, по умолчанию 'utf-8'
         """
         try:
-            with open(self.file_path, 'r', encoding=encoding) as file:
+            with open(self.file_path, 'r', encoding=encoding, newline='') as file:
                 reader = csv.reader(file, delimiter=delimiter)
                 data = list(reader)
                 return data
@@ -132,7 +135,7 @@ class CsvFile(AbstractFile):
             return []
         
 
-    def write(self, *data: list[dict], delimiter = ";", encoding: str = "utf-8"):
+    def write(self, data: list[list[str]], delimiter = ";", encoding: str = "utf-8"):
         """
         Запись данных в CSV-файл
         :param data: данные для записи в файл
@@ -144,7 +147,7 @@ class CsvFile(AbstractFile):
             writer.writerows(data)
 
 
-    def append(self, *data: list[dict], delimiter = ";", encoding: str = "utf-8"):
+    def append(self, data: list[list[str]], delimiter = ";", encoding: str = "utf-8"):
         """
         Добавление данных в CSV-файл в конец файла
         :param data: данные для добавления
@@ -154,7 +157,7 @@ class CsvFile(AbstractFile):
         with open(self.file_path, 'a', encoding=encoding, newline='') as file:
             writer = csv.writer(file, delimiter=delimiter, lineterminator='\n')
             if isinstance(data[0], list): # если data - это список списков
-                writer.writerow(data) # добавление строк
+                writer.writerows(data) # добавление строк
             else:
                 writer.writerow(data) # добавление строки 
     
