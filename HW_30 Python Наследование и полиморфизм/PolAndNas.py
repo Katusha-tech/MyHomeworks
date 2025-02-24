@@ -71,6 +71,9 @@ class JsonFile(AbstractFile):
         except FileNotFoundError:
             # Если файл не существует, создаем пустой список
             file_data = []
+
+        if not isinstance(file_data, list):
+            file_data = [file_data]
         
         # Добавляем новые данные в список
         file_data.extend(data)
@@ -102,7 +105,7 @@ class TxtFile(AbstractFile):
         :param encoding (str, optional): кодировка файла, по умолчанию 'utf-8'
         """
         with open(self.file_path, 'w', encoding=encoding) as file:
-            file.write('\n'.join(data) + '\n')
+            file.write(''.join(data))
 
 
     def append(self, data:list[str], encoding: str = "utf-8"):
@@ -112,7 +115,7 @@ class TxtFile(AbstractFile):
         :param encoding (str, optional): кодировка файла, по умолчанию 'utf-8'
         """
         with open(self.file_path, 'a', encoding=encoding) as file:
-            file.write('\n'.join(data) + '\n')
+            file.write(''.join(data))
         
 class CsvFile(AbstractFile):
     """Класс для работы с CSV-файлами(чтение, запись, дозапись)"""
@@ -147,7 +150,7 @@ class CsvFile(AbstractFile):
             writer.writerows(data)
 
 
-    def append(self, data: list[list[str]], delimiter = ";", encoding: str = "utf-8"):
+    def append(self, data: list[str], delimiter = ";", encoding: str = "utf-8"):
         """
         Добавление данных в CSV-файл в конец файла
         :param data: данные для добавления
