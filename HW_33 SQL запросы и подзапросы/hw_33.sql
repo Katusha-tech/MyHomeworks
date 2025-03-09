@@ -10,7 +10,7 @@ FROM MarvelCharacters
 WHERE eye = 'Variable Eyes'
 GROUP BY eye;
 
--- 3. Максимальное количесвто появлений у персонажей с определенным цветом волос
+-- 3. Максимальное количество появлений у персонажей с определенным цветом волос
 SELECT hair, MAX(appearances)
 FROM MarvelCharacters
 GROUP BY hair;
@@ -53,5 +53,47 @@ SELECT eye, AVG(year)
 FROM MarvelCharacters
 GROUP BY eye;
 
+-- Подзапросы
+-- 1. Персонаж с наибольшим количеством появлений 
+SELECT name, appearances
+FROM MarvelCharacters
+ORDER BY appearances DESC
+LIMIT 1;
 
+-- 2. Персонажи, впервые появившиеся в том же году, что и персонаж с максимальными появлениями 
+SELECT name, year
+FROM MarvelCharacters
+WHERE year = (
+    SELECT year
+    FROM MarvelCharacters
+    ORDER BY appearances DESC
+    LIMIT 1
+);
 
+-- 3. Персонажи с наименьшим количеством появлений среди живых
+SELECT name, appearances
+FROM MarvelCharacters
+WHERE appearances = (
+    SELECT MIN(appearances)
+    FROM MarvelCharacters
+    WHERE alive = "Living Characters"
+);
+
+-- 4. Персонажи с определенным цветом волос и максимальными появлениями среди такого цвета 
+SELECT name, hair, appearances
+FROM MarvelCharacters
+WHERE appearances = (
+    SELECT MAX(appearances)
+    FROM MarvelCharacters
+    WHERE MarvelCharacters.hair = MarvelCharacters.hair
+);
+
+-- 5. персонажи с публичной личностью и наименьшим количеством появлений
+SELECT name, identify, appearances
+FROM MarvelCharacters
+WHERE identify='Public Identity'
+AND appearances =(
+    SELECT MIN(appearances)
+    FROM MarvelCharacters
+    WHERE identify = 'Public Identity'
+);

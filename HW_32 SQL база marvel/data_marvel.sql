@@ -46,7 +46,7 @@ SELECT name, appearances
 FROM MarvelCharacters
 WHERE appearances < 10;
 
--- 10. Персонажи с наибольшим  количеством появлений (Еловек-паук, Капитан Америка, Россомаха, Железный Человек, Тор)
+-- 10. Персонажи с наибольшим  количеством появлений (Человек-паук, Капитан Америка, Россомаха, Железный Человек, Тор)
 SELECT name, appearances
 FROM MarvelCharacters
 LIMIT 5;
