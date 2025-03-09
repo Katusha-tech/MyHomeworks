@@ -82,10 +82,11 @@ WHERE appearances = (
 -- 4. Персонажи с определенным цветом волос и максимальными появлениями среди такого цвета 
 SELECT name, hair, appearances
 FROM MarvelCharacters
-WHERE appearances = (
-    SELECT MAX(appearances)
+WHERE (hair, appearances) IN (
+    SELECT hair, MAX(appearances)
     FROM MarvelCharacters
-    WHERE MarvelCharacters.hair = MarvelCharacters.hair
+    WHERE hair IS NOT NULL
+    GROUP BY hair
 );
 
 -- 5. персонажи с публичной личностью и наименьшим количеством появлений
