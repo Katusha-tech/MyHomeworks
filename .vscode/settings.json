@@ -5,6 +5,12 @@
             "driver": "SQLite",
             "name": "marvel",
             "database": "${workspaceFolder:MyHomeworks}/HW_32 SQL база marvel/marvel_not_normal.db"
+        },
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "BarbershopSQl_hw",
+            "database": "HW_34 SQL База данных для Барбершопа\\BarbershopSql.db"
         }
     ]
 }
