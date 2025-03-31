@@ -1,3 +1,5 @@
+-- 1 часть. Создание новых таблиц и доработка тех, которые были созданы.
+
 -- 1. Модификация таблицы Masters_services. Добавить поля price и duration_minutes;
 
 BEGIN TRANSACTION;
@@ -98,7 +100,122 @@ CREATE TABLE IF NOT EXISTS MasterSchedule (
     FOREIGN KEY (status_id) REFERENCES StatusDictionary(status_id) ON DELETE CASCADE
 );
 
+-- Заполнение таблицы MasterSchedule
+-- Мастер 1 (работает с понедельника по воскресенье)
+INSERT INTO MasterSchedule (master_id, day_of_week, start_time, end_time, status_id, comment) 
+VALUES (1, 1, '09:00', '18:00', 1, 'Рабочий день'),
+        (1, 2, '09:00', '18:00', 1, 'Рабочий день'),
+        (1, 3, '09:00', '18:00', 1, 'Рабочий день'),
+        (1, 4, '09:00', '18:00', 1, 'Рабочий день'),
+        (1, 5, '09:00', '18:00', 1, 'Рабочий день'),
+        (1, 6, '10:00', '15:00', 1, 'Сокращённый день'),
+        (1, 7, 'Выходной', 'Выходной', 2, 'Выходной');
+
+-- Мастер 2 (другое расписание)
+INSERT INTO MasterSchedule (master_id, day_of_week, start_time, end_time, status_id, comment) 
+VALUES (2, 1, '10:00', '19:00', 1, 'Рабочий день'),
+        (2, 2, '10:00', '19:00', 1, 'Рабочий день'),
+        (2, 3, '10:00', '19:00', 1, 'Рабочий день'),
+        (2, 4, '10:00', '19:00', 1, 'Рабочий день'),
+        (2, 5, '10:00', '19:00', 1, 'Рабочий день'),
+        (2, 6, '10:00', '14:00', 1, 'Сокращённый день'),
+        (2, 7, 'Выходной', 'Выходной', 2, 'Выходной');
+
+SELECT * FROM MasterSchedule;
+
+-- 2 часть. Серия запросов в БД Barbershop
+-- 2.1 Новая запись записи на услугу
+
+BEGIN TRANSACTION;
+
+-- Вставляем запись о приеме в  таблицу Appointments
+INSERT INTO Appointments (name, phone, date, master_id, status_id, start_time, end_time)
+VALUES ('Карл', '+79991234567', '2023-05-15', 1, 1, '10:00', '11:00');
+
+-- Получаем ID последней записи в таблице Appointments и вставляем его в таблицу Appointments_services
+INSERT INTO Appointments_services (appointment_id, service_id)
+VALUES (last_insert_rowid(), 1);
+
+COMMIT;
+
+-- 2.2 Изменение статуса записи
+
+BEGIN TRANSACTION;
+
+UPDATE Appointments
+SET status_id = (
+    SELECT status_id
+    FROM StatusDictionary
+    WHERE name = 'Отмена'
+)
+WHERE appointment_id = 1;
+
+COMMIT;
+
+-- 2.3 Корректировка цены услуги
+
+BEGIN TRANSACTION;
+
+UPDATE Masters_services
+SET price = 2500
+WHERE service_id = 1 AND master_id = 1;
+
+COMMIT;
+
+-- 2.4 Обновление расписания мастера
+
+BEGIN TRANSACTION;
+
+UPDATE MasterSchedule
+SET start_time = '12:00', end_time = '14:00'
+WHERE master_id = 1 AND day_of_week = 1;
+COMMIT;
+
+-- 2.5 Добавление нового статуса
+
+BEGIN TRANSACTION;
+
+INSERT INTO StatusDictionary (name, description)
+VALUES ('Завершена', 'Клиенту услуга выполнена');
+
+COMMIT;
+
+-- 2.6 Добавление отзыва клиента
+
+BEGIN TRANSACTION;
+
+INSERT INTO Reviews (appointment_id, rating, comment)
+SELECT 1, 5, 'Работа выполнена на отлично!'
+WHERE EXISTS (SELECT 1 FROM Appointments WHERE appointment_id = 1);
+
+COMMIT;
+
+-- 2.7 Массовая вставка новых услуг
+
+BEGIN TRANSACTION;
+
+INSERT INTO Services (title, description, price)
+VALUES ('Колорирование', 'Окрашшивание прядей в разный цвет', 15000),
+        ('Завивка', 'Создание кудрей', 6500);
+COMMIT;
+
+-- 2.8 Отмена записи на услугу
+
+BEGIN TRANSACTION;
+
+-- Удаляем запись из таблицы Appointments_services
+DELETE FROM Appointments_services
+WHERE appointment_id = 1;
+
+-- Обновляем статус записи в таблице Appointments
+UPDATE Appointments
+SET status_id = (SELECT status_id
+                FROM StatusDictionary
+                WHERE name = 'Отмена')
+WHERE appointment_id = 1;
+
+COMMIT;
 
 
 
-SELECT * FROM StatusDictionary;
+
